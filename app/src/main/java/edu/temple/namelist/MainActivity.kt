@@ -36,17 +36,28 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
+        val deleteButton = findViewById<View>(R.id.deleteButton)
+
+        // Set OnClickListener for the deleteButton
+        deleteButton.setOnClickListener {
+            val selectedIndex = spinner.selectedItemPosition
+            (names as MutableList).removeAt(selectedIndex)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
 
             // Set selection to index 0
             val resetIndex = 0
             spinner.setSelection(resetIndex)
 
-            // Update the nameTextView
-            val selectedName = names.getOrNull(resetIndex) ?: "No Name"
-            nameTextView.text = selectedName
+            // Update the nameTextView if names list is not empty
+            if (names.isNotEmpty()) {
+                val selectedName = names.getOrNull(resetIndex) ?: ""
+                nameTextView.text = selectedName
+            } else {
+                // Hide the deleteButton if no names are available
+                nameTextView.text = "No Names In List"
+                nameTextView.textSize = 20f
+                deleteButton.visibility = View.GONE
+            }
         }
 
     }
