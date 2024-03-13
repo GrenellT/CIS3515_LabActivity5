@@ -41,7 +41,12 @@ class MainActivity : AppCompatActivity() {
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
 
             // Set selection to index 0
-            spinner.setSelection(0)
+            val resetIndex = 0
+            spinner.setSelection(resetIndex)
+
+            // Update the nameTextView
+            val selectedName = names.getOrNull(resetIndex) ?: "No Name"
+            nameTextView.text = selectedName
         }
 
     }
